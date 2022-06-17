@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!--<param name="/use_sim_time" value="true" />
+    <node type="rviz" name="rviz" pkg="pipeline" args="$(find pipeline)/rviz/vision.rviz" />
+    <include file="$(find zed_wrapper)/launch/zed2.launch"/>
+    <node pkg="pipeline" name="get_grasp_poses_from_camera_data_ROS" type="get_grasp_poses_from_camera_data_ROS.py" output="screen"> </node>-->
+
+</launch>
