@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tristan/AprilTag/src/contrib/lm.h
+
+/home/tristan/AprilTag/src/contrib/lm_test.cpp
+stdio.h
+-
+lm.h
+/home/tristan/AprilTag/src/contrib/lm.h
+math.h
+-
+assert.h
+-
+stdlib.h
+-
+
