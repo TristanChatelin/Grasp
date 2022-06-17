@@ -711,7 +711,7 @@ def main():
         robot_pose_in_camera_frame = get_pose()
         t = rospy.Time.now()
 
-        print("delta x :",abs(robot_pose_in_camera_frame[0]-x)*100, "cm, delta y :",abs(robot_pose_in_camera_frame[1]-y)*100, "cm, delta z :",abs(robot_pose_in_camera_frame[2]-z)*100, "cm")
+        #print("delta x :",abs(robot_pose_in_camera_frame[0]-x)*100, "cm, delta y :",abs(robot_pose_in_camera_frame[1]-y)*100, "cm, delta z :",abs(robot_pose_in_camera_frame[2]-z)*100, "cm")
 
         x, y, z = robot_pose_in_camera_frame[0], robot_pose_in_camera_frame[1], robot_pose_in_camera_frame[2]
 
