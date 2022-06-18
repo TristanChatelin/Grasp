@@ -1,0 +1,130 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+
+# For beginners, we downscale velocity and acceleration limits.
+# You can always specify higher scaling factors (<= 1.0) in your motion requests.  # Increase the values below to 1.0 to always move at maximum speed.
+default_velocity_scaling_factor: 0.1
+default_acceleration_scaling_factor: 0.1
+
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  BH282__base_to_finger_11_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__base_to_finger_21_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_11_to_finger_12_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_12_to_finger_13_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_21_to_finger_22_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_22_to_finger_23_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_31_to_finger_32_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  BH282__finger_32_to_finger_33_joint:
+    has_velocity_limits: true
+    max_velocity: 2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_bl_caster_rotation_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_bl_caster_wheel_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_br_caster_rotation_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_br_caster_wheel_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_fl_caster_rotation_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_fl_caster_wheel_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_fr_caster_rotation_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_fr_caster_wheel_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_left_wheel_joint:
+    has_velocity_limits: true
+    max_velocity: 20
+    has_acceleration_limits: false
+    max_acceleration: 0
+  MiR__base_right_wheel_joint:
+    has_velocity_limits: true
+    max_velocity: 20
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__base_to_shoulder_pan_joint:
+    has_velocity_limits: true
+    max_velocity: 2.16
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__fore_arm_to_wrist_1_joint:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__shoulder_pan_to_upper_arm_joint:
+    has_velocity_limits: true
+    max_velocity: 2.16
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__upper_arm_to_fore_arm_joint:
+    has_velocity_limits: true
+    max_velocity: 3.15
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__wrist_1_to_wrist_2_joint:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  UR10__wrist_2_to_wrist_3_joint:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
