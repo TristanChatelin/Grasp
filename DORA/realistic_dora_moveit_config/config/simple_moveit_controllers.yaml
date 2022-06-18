@@ -1,0 +1,19 @@
+controller_list:
+  - name: ur10_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - UR10__base_to_shoulder_pan_joint
+      - UR10__shoulder_pan_to_upper_arm_joint
+      - UR10__upper_arm_to_fore_arm_joint
+      - UR10__fore_arm_to_wrist_1_joint
+      - UR10__wrist_1_to_wrist_2_joint
+      - UR10__wrist_2_to_wrist_3_joint
+  - name: rg6_gripper_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - left_outer_knuckle_joint
+      - right_outer_knuckle_joint
