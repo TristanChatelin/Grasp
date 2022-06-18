@@ -11,7 +11,7 @@ catkin_package(
 
 )
 
-catkin_install_python(PROGRAMS scripts/get_grasp_poses_from_camera_data_ROS.py scripts/get_pose_robot.py
+catkin_install_python(PROGRAMS scripts/get_grasp_poses_from_camera_data_publisher.py scripts/get_pose_robot_publisher.py
  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
