@@ -72,7 +72,6 @@ Run this command to start the moveit controller that checks for the grasp poses:
 
 ```
     rosrun mobile_manipulator grasp_pose_subscriber.py
-
 ```
 ### Terminal 6:
 Run this command to publish the grasp pose:
@@ -80,6 +79,5 @@ Run this command to publish the grasp pose:
 
 ```
     rosrun pipeline get_grasp_poses_from_camera_data_publihser.py
-
 ```
 
