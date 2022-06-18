@@ -50,7 +50,7 @@ Once this is done, you can begin sending commands to the arm! To simplify that, 
 Run this command in the second terminal:
 
 ```
-    rosun pipeline get_pose_robot.py
+    rosrun pipeline get_pose_robot.py
 ```
 
 ### Terminal 3:
