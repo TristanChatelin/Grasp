@@ -19,12 +19,12 @@ import sensor_msgs.point_cloud2 as pc2
 
 publish_rate = 2
 
-offset_x = 0.108 #These three values are the distance between the upper right corner of the AprilTag with ID 0 and the center of the arm
-offset_y = 0.0425
-offset_z = -0.003
+offset_x = 0.11 # These three values are the distance between the upper right corner of the AprilTag with ID 0 and the center of the arm
+offset_y = 0.04
+offset_z = -0.03
 
-spacing_between_at_1_4 = 0.20#This value is the distance between the upper right corner of the AprilTag 1 and 4
-spacing_between_at_1_3 = 0.235#This value is the distance between the upper right corner of the AprilTag 1 and 4
+spacing_between_at_1_4 = 0.20 # This value is the distance between the upper right corner of the AprilTag 1 and 4
+spacing_between_at_1_3 = 0.235 # This value is the distance between the upper right corner of the AprilTag 1 and 3
 
 ## Programs
 
