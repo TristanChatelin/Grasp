@@ -23,35 +23,7 @@ import rospy
 from move_group_python import MoveGroupPython 
 from visualization_msgs.msg import MarkerArray, Marker
 from geometry_msgs.msg import PoseStamped, Pose
-
-
-
-# def callback(grasp_poses, tfBuffer):
-#     # print(f"--------------------->: {grasp_poses.markers[0]}")
-#     global ur10_planner
-#     # ur10_planner.planning_frame = grasp_poses.markers[0].header.frame_id
-#     pose_goal_from_gpd = PoseStamped()
-#     pose_goal_from_gpd.header = grasp_poses.markers[0].header
-#     pose_goal_from_gpd.pose = grasp_poses.markers[0].pose
-#     transformed_pose_goal = tfBuffer.transform(pose_goal_from_gpd, "base_link", rospy.Duration(1))
-#     car_path = ur10_planner.plan_cartesian_path(transformed_pose_goal)
-#     ur10_planner.display_trajectory(car_path[0])
-#     ur10_planner.execute_plan(car_path[0])
-#     # ur10_planner.go_to_default_pose()
-
-
-# def listener(buffer):
-#     rospy.Subscriber("/detect_grasps/plot_grasps", MarkerArray, callback, queue_size=1, buff_size=52428800, callback_args=buffer) 
-#     rospy.spin()
-
-# if __name__ == '__main__':
-#     # rospy.init_node('listener',log_level=rospy.DEBUG, anonymous=True)
-#     ur10_planner = MoveGroupPython("manipulator")
-#     tfBuffer = tf2_ros.Buffer(rospy.Duration(100))
-#     tfListener = tf2_ros.TransformListener(tfBuffer)
-#     listener(tfBuffer)
-
-import numpy as np # Scientific computing library for Python
+import numpy as np
  
 def get_quaternion_from_euler(roll, pitch, yaw):
   """
@@ -126,9 +98,9 @@ def give_offset(object_pose, end_effector_pose, offset=0.2):
     #print(vx/vmag, vy/vmag)
     # going in the direction of the vector v by the offset amount
     # hence we get a point that is the offset away from the can
-    goal_pose.pose.position.x = cx #+ vx / vmag * offset
-    goal_pose.pose.position.y = cy #+ vy / vmag * offset
-    goal_pose.pose.position.z = cz #+ vz / vmag * offset + 0.25
+    goal_pose.pose.position.x = cx + vx / vmag * offset
+    goal_pose.pose.position.y = cy + vy / vmag * offset
+    goal_pose.pose.position.z = cz + vz / vmag * offset
     print("\n\n", vz / vmag * offset, "\n\n")
     return goal_pose
 
@@ -141,59 +113,50 @@ def publish_pose(marker):
 def get_magn(pose):
   x = pose.position.x
   y = pose.position.y
-  return (x**2 + y**2)**0.5
+  z = pose.position.z
+  return (x**2 + y**2 + z**2)**0.5
 
 def get_diff(pose1, pose2):
   x = pose1.position.x - pose2.position.x
   y = pose1.position.y - pose2.position.y
+  z = pose1.position.z - pose2.position.z
   pose3 = Pose()
   pose3.position.x = x
   pose3.position.y = y
+  pose3.position.z = z
   return pose3
 
 
 def callback(grasp_poses, tfBuffer):
     global ur10_planner
-    #print(grasp_poses)
     pose_goal_from_gpd = PoseStamped()
-    # the visualized grasp is a MarkerArray of four blocks. grasp_poses.markers[2] is the "wrist" block
-    # just need to offset the depth a bit to avoid slamming the object, but can't be done with frame_id='map' 
     pose_goal_from_gpd.header = grasp_poses.markers[2].header
     pose_goal_from_gpd.pose = grasp_poses.markers[2].pose
-    #ur10_planner.go_to_pose_goal(pose_goal_from_gpd)
-    # transformed_pose_goal = tfBuffer.transform(pose_goal_from_gpd, "base_link", rospy.Duration(1))
-    # roll, pitch, yaw = euler_from_quaternion(transformed_pose_goal.pose.orientation.x, transformed_pose_goal.pose.orientation.y, transformed_pose_goal.pose.orientation.z, transformed_pose_goal.pose.orientation.w)
-    # pitch -= np.pi/2
-    # rotated_pose = copy(transformed_pose_goal)
-    # new_quat = get_quaternion_from_euler(roll, pitch, yaw)
-    # rotated_pose.pose.orientation.x = new_quat[0]
-    # rotated_pose.pose.orientation.y = new_quat[1]
-    # rotated_pose.pose.orientation.z = new_quat[2]
-    # rotated_pose.pose.orientation.w = new_quat[3]
+    
     pose_a = PoseStamped()
     pose_a.header = grasp_poses.markers[2].header
     pose_a.pose = grasp_poses.markers[2].pose
+    
     pose_b = PoseStamped()
     pose_b.header = grasp_poses.markers[3].header
     pose_b.pose = grasp_poses.markers[3].pose
+    
     pose_a = tfBuffer.transform(pose_a, "base_link", rospy.Duration(1))
     pose_b = tfBuffer.transform(pose_b, "base_link", rospy.Duration(1))
     pose_c = deepcopy(pose_a)
+    
     pose_c.pose = get_diff(pose_b.pose, pose_a.pose)
     magn_pose_c = get_magn(pose_c.pose)
     offset = 0.15 # scaling grasp offset between gripper and object 
     pose_c.pose.position.x = pose_c.pose.position.x * offset/magn_pose_c + pose_b.pose.position.x
     pose_c.pose.position.y = pose_c.pose.position.y * offset/magn_pose_c + pose_b.pose.position.y
-    pose_c.pose.position.z = pose_a.pose.position.z
+    pose_c.pose.position.z = pose_c.pose.position.z * offset/magn_pose_c + pose_b.pose.position.z
     pose_c.pose.orientation = deepcopy(pose_b.pose.orientation)
     offseted_pose = deepcopy(pose_c)
-    # offseted_pose = give_offset(transformed_pose_goal,ur10_planner.move_group.get_current_pose().pose)
     #print(f"pose_a: {pose_a}\npose_c: {pose_c}")
     car_path = ur10_planner.plan_cartesian_path(offseted_pose)
     # reg_path = ur10_planner.go_to_pose_goal(offseted_pose)
     ur10_planner.display_trajectory(car_path[0])
-    # ur10_planner.display_trajectory(reg_path)
-    #rospy.sleep(5)
     ur10_planner.execute_plan(car_path[0])
     
     
